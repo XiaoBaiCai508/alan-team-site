@@ -2,96 +2,151 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Alan 菁英交易團隊｜黑金滾動官網（Professional v5）</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Alan 菁英交易團隊｜黑金官網</title>
 <style>
   :root{
     --rail-w: min(1344px, 86vw);
     --gold: #d4af37;
     --text: #e8e8e8;
   }
-  html, body { margin:0; height:100%; background:#000; color:var(--text); scroll-behavior:smooth; }
-  body { font-family: 'Segoe UI', Roboto, sans-serif; overflow-y:auto; }
+  html,body{margin:0;height:100%;background:#000;color:var(--text);}
+  body{font-family:'Segoe UI',Roboto,system-ui,-apple-system,Arial,sans-serif;line-height:1.8;overflow-y:auto;scroll-behavior:smooth;}
 
-  .bg, .lines, .center-band, canvas.fire-canvas { position:fixed; inset:0; }
-  .bg{ background:#000; z-index:0; }
-  .lines{ z-index:1; animation:glow 18s ease-in-out infinite; }
-  .lines svg{ width:100%; height:100%; display:block; }
-  @keyframes glow{0%,100%{opacity:.14;}50%{opacity:.26;}}
-  .center-band{ z-index:2; left:50%; transform:translateX(-50%); width:var(--rail-w); background:linear-gradient(180deg,rgba(15,15,15,.93)0%,rgba(10,10,10,.93)100%); border-inline:1px solid rgba(212,175,55,.1); box-shadow:inset 0 0 0 1px rgba(250,204,21,.05),0 20px 60px rgba(0,0,0,.6); pointer-events:none; }
+  /* 背景層 */
+  .bg,.grid,.center-band,canvas.fire-canvas{position:fixed;inset:0;}
+  .bg{background:#000;z-index:0;}
+
+  /* 蜂巢格（較明顯金色） */
+  .grid{z-index:1;opacity:.32;}
+  .grid svg{width:100%;height:100%;display:block;}
+
+  /* 中央主內容帶（也是光球的阻擋區） */
+  .center-band{
+    z-index:2;
+    left:50%;transform:translateX(-50%);
+    width:var(--rail-w);
+    pointer-events:none;
+    background:linear-gradient(180deg,rgba(12,12,12,.92),rgba(8,8,8,.92));
+    border-inline:1px solid rgba(212,175,55,.15);
+    box-shadow:inset 0 0 0 1px rgba(250,204,21,.06);
+  }
+
+  /* 飄動光球畫布（兩側） */
   canvas.fire-canvas{ z-index:2; pointer-events:none; }
 
-  main.rail{ position:relative; z-index:3; width:var(--rail-w); margin-inline:auto; padding:min(6vh,64px) clamp(18px,3vw,40px); }
-  .block{ position:relative; padding:clamp(36px,6vh,72px) 0; max-width:940px; margin:0 auto; }
-  .block+.block::before{ content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,rgba(212,175,55,0),rgba(212,175,55,.22),rgba(212,175,55,0)); }
+  /* 主內容 */
+  main.rail{position:relative;z-index:3;width:var(--rail-w);margin-inline:auto;padding:72px 22px 160px;}
+  .block{position:relative;max-width:940px;margin:0 auto;padding:clamp(36px,6vh,72px) 0;}
+  .block+.block::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,rgba(212,175,55,0),rgba(212,175,55,.22),rgba(212,175,55,0));}
 
-  h1,h2,h3{ margin:0 0 .6em; line-height:1.15; text-align:center; }
-  h1{ font-size:clamp(32px,5vw,56px); }
-  h2{ font-size:clamp(26px,3.6vw,40px); }
-  p.lead{ color:#d7d7d7; font-size:clamp(18px,2.2vw,22px); line-height:1.8; margin:0 auto 1em; max-width:880px; text-align:left; }
-  .eyebrow{ color:var(--gold); letter-spacing:.18em; font-size:12px; text-transform:uppercase; text-align:center; margin-bottom:12px; }
+  /* 文字樣式 */
+  .eyebrow{color:var(--gold);letter-spacing:.18em;font-size:12px;text-transform:uppercase;text-align:center;margin-bottom:12px;}
+  h1,h2{margin:0 0 .5em;text-align:center;line-height:1.15;}
+  h1{font-size:clamp(30px,5vw,56px);}
+  h2{font-size:clamp(26px,3.6vw,40px);}
+  p.lead{color:#d7d7d7;font-size:clamp(18px,2.2vw,22px);line-height:1.9;margin:0 auto;max-width:880px;text-align:left;}
 
-  .media{ display:grid; place-items:center; margin:24px 0 10px; }
-  .portrait{ width:clamp(140px,24vw,220px); aspect-ratio:1/1; border-radius:50%; overflow:hidden; border:1px solid rgba(212,175,55,.25); box-shadow:0 14px 40px rgba(0,0,0,.55); }
-  .portrait img{ width:100%; height:auto; display:block; }
-  .qr{ width:clamp(220px,34vw,360px); border-radius:14px; border:1px solid rgba(212,175,55,.25); box-shadow:0 10px 40px rgba(0,0,0,.55); }
+  /* 圖片樣式 */
+  .media{display:grid;place-items:center;margin:24px 0 10px;}
+  .portrait{width:clamp(140px,24vw,220px);aspect-ratio:1/1;border-radius:50%;overflow:hidden;border:1px solid rgba(212,175,55,.25);box-shadow:0 14px 40px rgba(0,0,0,.55);}
+  .portrait img{width:100%;height:auto;display:block;}
+  .qr{width:clamp(220px,34vw,360px);border-radius:14px;border:1px solid rgba(212,175,55,.25);box-shadow:0 10px 40px rgba(0,0,0,.55);}
 
-  .actions{ display:flex; gap:12px; justify-content:center; margin-top:18px; flex-wrap:wrap; }
-  .btn{ appearance:none; border:1px solid rgba(212,175,55,0.4); background:transparent; color:var(--text); padding:12px 18px; border-radius:10px; cursor:pointer; transition:.25s ease; }
-  .btn.primary{ background:linear-gradient(180deg,#f5d25a,#d4af37); color:#141210; border:none; box-shadow:0 6px 20px rgba(212,175,55,.35); }
-  .btn:hover{ transform:translateY(-1px); box-shadow:0 8px 26px rgba(212,175,55,.3); }
+  /* 優勢帶 */
+  .band{text-align:center;}
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:14px;}
+  .metric{border:1px solid rgba(212,175,55,.22);border-radius:12px;padding:14px;background:rgba(18,18,18,.6);box-shadow:inset 0 0 0 1px rgba(250,204,21,.05);}
+  .metric b{font-size:clamp(18px,2.6vw,22px);color:#f3e7b1;display:block;margin-bottom:6px;}
+  .metric span{color:#cfcfcf;font-size:14px;line-height:1.6;}
+  @media(max-width:900px){.metrics{grid-template-columns:1fr;}}
 
-  /* 關鍵優勢帶 */
-  .band{ text-align:center; }
-  .metrics{ display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; margin-top:14px; }
-  .metric{ border:1px solid rgba(212,175,55,.22); border-radius:12px; padding:14px; background:rgba(18,18,18,.6); box-shadow: inset 0 0 0 1px rgba(250,204,21,.05); }
-  .metric b{ font-size: clamp(18px, 2.6vw, 22px); color:#f3e7b1; display:block; margin-bottom:6px; }
-  .metric span{ color:#cfcfcf; font-size:14px; line-height:1.6; }
-  @media(max-width:900px){ .metrics{ grid-template-columns:1fr; } }
+  /* 按鈕 */
+  .actions{display:flex;gap:12px;justify-content:center;margin-top:18px;flex-wrap:wrap;}
+  .btn{appearance:none;border:1px solid rgba(212,175,55,.4);background:transparent;color:var(--text);padding:12px 18px;border-radius:10px;cursor:pointer;transition:.25s ease;text-decoration:none;}
+  .btn.primary{background:linear-gradient(180deg,#f5d25a,#d4af37);color:#141210;border:none;box-shadow:0 6px 20px rgba(212,175,55,.35);}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 8px 26px rgba(212,175,55,.3);}
+
+  /* 固定左上 logo */
+  .logo{position:fixed;z-index:4;left:20px;top:16px;display:flex;align-items:center;gap:10px;color:#cfcfcf;font-size:14px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;}
+  .logo img{width:28px;height:28px;object-fit:contain;filter:grayscale(1) brightness(.9);}
+  .logo b{color:#f1e7b6;font-weight:600;}
 </style>
 </head>
 <body>
   <div class="bg"></div>
-  <div class="lines" aria-hidden>
-    <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><defs><pattern id="hex" width="60" height="52" patternUnits="userSpaceOnUse"><path d="M30 0 L60 15 L60 37 L30 52 L0 37 L0 15 Z" fill="none" stroke="#d4af37" stroke-opacity="0.45" stroke-width="0.7" /></pattern></defs><rect width="100%" height="100%" fill="url(#hex)"/></svg>
+
+  <!-- 蜂巢格背景 -->
+  <div class="grid" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <defs>
+        <pattern id="hexTiny" width="44" height="38" patternUnits="userSpaceOnUse">
+          <path d="M22 1 L43 12 L43 26 L22 37 L1 26 L1 12 Z"
+                fill="none" stroke="#d4af37" stroke-opacity="0.35" stroke-width="0.58"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#hexTiny)"/>
+    </svg>
   </div>
+
+  <!-- 中央內容帶（光球不會進入） -->
   <div class="center-band" aria-hidden="true"></div>
+
+  <!-- ✅ 光球畫布（加回來了） -->
   <canvas id="fireCanvas" class="fire-canvas"></canvas>
 
+  <!-- 左上小 Logo -->
+  <div class="logo">
+    <img src="images/alan-logo.jpg" alt="Alan Logo"/>
+    <span>Alan Team｜<b>Elite</b></span>
+  </div>
+
+  <!-- 主內容 -->
   <main class="rail">
     <!-- Hero -->
     <section class="block" id="hero">
       <div class="eyebrow">ALAN ELITE TRADING TEAM</div>
       <h1>用紀律與結構，掌握市場主動權</h1>
-      <p class="lead">我們是一支結合多市場經驗的專業交易團隊，以紀律、結構與風控為核心價值。每位分析師皆有獨立研究體系與交易模型，透過多重策略與多週期分析，在市場波動中維持穩定獲利與清晰邏輯。</p>
-      <div class="actions"><a class="btn primary" href="#join">加入 LINE 群</a></div>
+      <p class="lead">
+        我們是一支結合多市場經驗的專業交易團隊，以紀律、結構與風控為核心價值。每位分析師都有獨立研究體系與交易模型，
+        透過多重策略與多週期分析，致力於在市場波動中維持穩定獲利。
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="#join">加入 LINE 群</a>
+      </div>
     </section>
 
-    <!-- 優勢 -->
+    <!-- 關鍵優勢 -->
     <section class="block band" id="highlights">
       <div class="eyebrow">OUR EDGE</div>
       <h2>策略 × 風控 × 紀律</h2>
       <div class="metrics">
-        <div class="metric"><b>多框架結構分析</b><span>結合 SMC、諧波與傳統理論交叉驗證，讓進出場具一致性與可重複性。</span></div>
-        <div class="metric"><b>風險先於獲利</b><span>嚴格定義風險預算與部位規模，透過統計與回測數據支撐決策。</span></div>
-        <div class="metric"><b>實戰節奏訓練</b><span>重視執行力與紀律，養成控單節奏與風險意識的市場肌肉記憶。</span></div>
+        <div class="metric"><b>多框架結構分析</b><span>SMC、諧波、傳統理論交叉驗證，提升進出場的一致性與可重複性。</span></div>
+        <div class="metric"><b>風險先於獲利</b><span>嚴格定義風險預算與部位規模，以客觀統計與回測數據管理決策。</span></div>
+        <div class="metric"><b>實戰節奏訓練</b><span>重視執行力與紀律，培養控單節奏與風險承擔的肌肉記憶。</span></div>
       </div>
     </section>
 
     <!-- Alan -->
     <section class="block" id="alan">
       <div class="media"><div class="portrait"><img src="images/alan-avatar.jpg" alt="Alan"></div></div>
-      <div class="eyebrow">Alan｜SMC 結構大師</div>
+      <div class="eyebrow">Alan｜SMC 頂級高手</div>
       <h2>結構為王、紀律為盾</h2>
-      <p class="lead">Alan 精通 Smart Money Concept（SMC）與諧波結構，能在市場流動性與結構轉換間精準定位。他注重進場邏輯的重複性與可驗證性，主張「不追價、不賭博，只操作結構清晰的區間」。在團隊中，他負責策略方向、結構研發與交易紀律訓練，帶領整體決策邏輯穩定落地。</p>
+      <p class="lead">
+        Alan 精通 SMC 與諧波結構，能在市場流動性與結構轉換間精準定位。他注重進場邏輯的重複性與可驗證性，
+        主張「不追價、不賭博、只操作結構清晰的區間」。在團隊中，負責策略方向與交易紀律訓練。
+      </p>
     </section>
 
     <!-- Demo -->
     <section class="block" id="demo">
       <div class="media"><div class="portrait"><img src="images/demo.jpg" alt="Demo"></div></div>
-      <div class="eyebrow">Demo｜諧波結構專家</div>
+      <div class="eyebrow">Demo｜諧波型態頂級高手</div>
       <h2>結構與對稱的完美交界</h2>
-      <p class="lead">Demo 擅長捕捉市場諧波型態的節奏，透過 Fibonacci 區間與對稱性結合 SMC 結構，能預判市場潛在反轉點。他主張「等待結構完成，而非主觀預測」，讓操作更科學、穩定且可驗證。</p>
+      <p class="lead">
+        Demo 擅長捕捉市場諧波型態的節奏，透過 Fibonacci 區間與對稱性分析結合 SMC 結構，預判市場潛在反轉點。
+        他的策略在波段與中短線皆有高準確率，強調「耐心等待結構完成，而非主觀預測」。
+      </p>
     </section>
 
     <!-- JC -->
@@ -99,7 +154,10 @@
       <div class="media"><div class="portrait"><img src="images/jc.jpg" alt="JC"></div></div>
       <div class="eyebrow">JC｜傳統理論戰派</div>
       <h2>經典理論，現代視角</h2>
-      <p class="lead">JC 熟稔波浪理論、亞當理論與威克夫結構，並融合現代技術指標與結構邏輯，強調市場背後的群體心理與資金慣性。他的視角結合宏觀與微觀分析，能夠洞察市場節奏變化並提供前瞻性的交易觀點。</p>
+      <p class="lead">
+        JC 熟稔波浪理論、亞當理論與威克夫結構，並將它們與現代技術指標（EMA、多週期結構）整合運用。
+        他擅於解構市場行為邏輯，強調價格行為背後的群體心理與資金慣性，提供宏觀與微觀兼具的市場洞察。
+      </p>
     </section>
 
     <!-- Zac -->
@@ -107,15 +165,21 @@
       <div class="media"><div class="portrait"><img src="images/zac.jpg" alt="Zac"></div></div>
       <div class="eyebrow">Zac｜風控與結構策略</div>
       <h2>紀律，是最終的勝率</h2>
-      <p class="lead">Zac 是團隊中的策略與風控架構設計師，強調「倖存者偏差」的風險排除原則，確保每筆交易皆在統計優勢下進行。他將數據分析結構化為系統性策略，讓團隊決策更高效且具邏輯性。</p>
+      <p class="lead">
+        Zac 在團隊中負責策略管理與風控架構設計。他強調避免「倖存者偏差」，以統計與回測確保每筆交易在風險可控下運作。
+        對於 SMC 與結構轉換同樣精通，讓決策始終在邏輯與紀律的框架內運行。
+      </p>
     </section>
 
-    <!-- Rookie -->
+    <!-- 幣圈菜雞 -->
     <section class="block" id="rookie">
       <div class="media"><div class="portrait"><img src="images/rookie.jpg" alt="Rookie"></div></div>
       <div class="eyebrow">幣圈菜雞｜全能型操盤手</div>
       <h2>橫跨市場，節奏制勝</h2>
-      <p class="lead">菜雞橫跨加密、期貨與黃金市場，擅於融合價格行為與量能結構。他重視多週期節奏與市場脈動掌握，保持冷靜與紀律，讓高波動市場的混亂變成機會。</p>
+      <p class="lead">
+        菜雞熟悉黃金、期貨與加密資產市場，擅於結合 SMC、價格行為與量能結構，靈活切換交易週期，快速適應不同環境。
+        在高波動的幣圈中，保持穩健與節奏感是他的核心優勢。
+      </p>
     </section>
 
     <!-- Join -->
@@ -123,53 +187,110 @@
       <div class="media"><img class="qr" src="images/line-qr.jpg" alt="LINE QR"></div>
       <div class="eyebrow">JOIN</div>
       <h2>加入我們的 LINE 群</h2>
-      <p class="lead" style="text-align:center">如果你也對結構化交易有熱情，想進一步了解我們的策略研究與市場觀點，掃描 QR Code 或點擊上方「加入 LINE 群」即可立即加入。這裡沒有炒作，只有紀律與成長。</p>
-      <div class="actions"><a class="btn primary" href="https://line.me/ti/g2/cRKzRj5VZVMtQpEgzU2WHyxZRYuern3tfnKdVw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank" rel="noopener">直接跳轉 LINE</a><a class="btn" href="#hero">回到頂部</a></div>
+      <p class="lead" style="text-align:center">
+        如果你對結構化交易有熱情，或想了解我們的策略研究、實戰分享與市場觀點，
+        掃描 QR Code 或直接點擊下方按鈕加入。這裡沒有炒作，只有紀律與成長。
+      </p>
+      <div class="actions">
+        <a class="btn primary" id="joinLink" target="_blank" rel="noopener">直接跳轉 LINE</a>
+        <!-- ✅ 新增交易所按鈕，與 LINE 並排、樣式相同 -->
+        <a class="btn primary" href="https://reurl.cc/vLMWg1" target="_blank" rel="noopener">BYBIT 交易所 註冊</a>
+        <a class="btn primary" href="https://reurl.cc/qYENgR" target="_blank" rel="noopener">MEXC 抹茶 註冊</a>
+      </div>
     </section>
   </main>
 
 <script>
-/* ======== 粒子光球動畫（持續移動版） ======== */
+/* ========= 兩側金色光球（已加回，持續飄動；不進中央帶） ========= */
 (function(){
   const canvas=document.getElementById('fireCanvas');
   const ctx=canvas.getContext('2d');
   const band=document.querySelector('.center-band');
+
   let W=0,H=0,DPR=1,bandRect={left:0,right:0,top:0,bottom:0};
-  const GOLD_CORE='rgba(255,240,180,1)', GOLD_RING='rgba(255,230,130,0.65)', GOLD_GLOW='rgba(255,230,130,0)';
+  const GOLD_CORE='rgba(255,240,180,1)';
+  const GOLD_RING='rgba(255,230,130,0.55)';
+  const GOLD_GLOW='rgba(255,230,130,0)';
 
-  const COUNT=140, MIN_SPEED=20, MAX_SPEED=60, TURN_RATE=0.015, BOUNCE_BOOST=1.06;
-  const particles=[]; const rand=(a,b)=>Math.random()*(b-a)+a;
-  const measure=()=>{const r=band.getBoundingClientRect();bandRect={left:r.left,right:r.right,top:r.top,bottom:r.bottom}};
-  const resize=()=>{DPR=Math.max(1,window.devicePixelRatio||1);W=innerWidth;H=innerHeight;canvas.width=W*DPR;canvas.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);measure()};
-  window.addEventListener('resize',()=>requestAnimationFrame(resize)); resize();
+  const COUNT=140;
+  const MIN_SPEED=10, MAX_SPEED=28;
+  const TURN_RATE=0.015, BOUNCE_BOOST=1.06;
 
+  const particles=[];
+  function rand(a,b){return Math.random()*(b-a)+a;}
+  function measureBand(){
+    const r=band.getBoundingClientRect();
+    bandRect={left:r.left,right:r.right,top:r.top,bottom:r.bottom};
+  }
+  function outsideCenter(x,y,r){
+    return (x<bandRect.left-r)||(x>bandRect.right+r)||(y<bandRect.top-r)||(y>bandRect.bottom+r);
+  }
+  function resize(){
+    DPR=Math.max(1,window.devicePixelRatio||1);
+    W=innerWidth; H=innerHeight;
+    canvas.style.width=W+'px'; canvas.style.height=H+'px';
+    canvas.width=Math.round(W*DPR); canvas.height=Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    measureBand();
+  }
+  addEventListener('resize',()=>requestAnimationFrame(resize));
+  resize();
+
+  // 初始化：光球只生成在左右兩側
   for(let i=0;i<COUNT;i++){
-    let r=rand(0.4,1),x,y; do{x=rand(0,W);y=rand(0,H);}while(x>bandRect.left-40 && x<bandRect.right+40);
-    const sp=rand(MIN_SPEED,MAX_SPEED),a=rand(0,Math.PI*2);
-    particles.push({x,y,r,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,ph:rand(0,Math.PI*2),op:rand(0.7,1)});
+    let x,y,r=rand(0.4,1.0);
+    do{ x=rand(0,W); y=rand(0,H); }while(!outsideCenter(x,y,r));
+    const speed=rand(MIN_SPEED,MAX_SPEED), ang=rand(0,Math.PI*2);
+    particles.push({x,y,r, vx:Math.cos(ang)*speed, vy:Math.sin(ang)*speed, phase:rand(0,Math.PI*2), opBase:rand(0.60,0.90)});
   }
 
   let last=performance.now();
-  const loop=(now)=>{
+  function loop(now){
     const dt=Math.min(0.04,(now-last)/1000); last=now;
-    ctx.clearRect(0,0,W,H); ctx.globalCompositeOperation='lighter';
+    ctx.clearRect(0,0,W,H);
+    ctx.globalCompositeOperation='lighter';
+
     for(const p of particles){
+      // 微轉向 + 速度夾限（保持活性）
       const ang=Math.atan2(p.vy,p.vx)+(Math.random()-0.5)*TURN_RATE;
-      let sp=Math.hypot(p.vx,p.vy); sp=Math.min(MAX_SPEED,Math.max(MIN_SPEED,sp));
-      p.vx=Math.cos(ang)*sp; p.vy=Math.sin(ang)*sp;
+      let speed=Math.hypot(p.vx,p.vy);
+      if(speed<MIN_SPEED)speed=MIN_SPEED; else if(speed>MAX_SPEED)speed=MAX_SPEED;
+      p.vx=Math.cos(ang)*speed; p.vy=Math.sin(ang)*speed;
+
+      // 位移
       p.x+=p.vx*dt; p.y+=p.vy*dt;
-      if(p.x<p.r){p.x=p.r;p.vx=Math.abs(p.vx)*BOUNCE_BOOST;}
-      if(p.x>W-p.r){p.x=W-p.r;p.vx=-Math.abs(p.vx)*BOUNCE_BOOST;}
-      if(p.y<p.r){p.y=p.r;p.vy=Math.abs(p.vy)*BOUNCE_BOOST;}
-      if(p.y>H-p.r){p.y=H-p.r;p.vy=-Math.abs(p.vy)*BOUNCE_BOOST;}
+
+      // 視窗邊界彈回
+      if(p.x<p.r){ p.x=p.r; p.vx=Math.abs(p.vx)*BOUNCE_BOOST; }
+      if(p.x>W-p.r){ p.x=W-p.r; p.vx=-Math.abs(p.vx)*BOUNCE_BOOST; }
+      if(p.y<p.r){ p.y=p.r; p.vy=Math.abs(p.vy)*BOUNCE_BOOST; }
+      if(p.y>H-p.r){ p.y=H-p.r; p.vy=-Math.abs(p.vy)*BOUNCE_BOOST; }
+
+      // 中央內容帶阻擋：闖入則彈回左右
       if(p.y>bandRect.top-p.r && p.y<bandRect.bottom+p.r && p.x>bandRect.left-p.r && p.x<bandRect.right+p.r){
         const mid=(bandRect.left+bandRect.right)/2;
-        if(p.x<mid){p.x=bandRect.left-p.r;if(p.vx>0)p.vx*=-BOUNCE_BOOST;}
-        else{p.x=bandRect.right+p.r;if(p.vx<0)p.vx*=-BOUNCE_BOOST;}
+        if(p.x<mid){ p.x=bandRect.left-p.r; if(p.vx>0) p.vx*=-BOUNCE_BOOST; }
+        else       { p.x=bandRect.right+p.r; if(p.vx<0) p.vx*=-BOUNCE_BOOST; }
       }
-      const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*6);
-      const op=p.op+Math.sin(now/1800+p.ph)*0.08;
-      g.addColorStop(0,GOLD_CORE); g.addColorStop(0.45,`rgba(255,240,180,${Math.max(0,op-0.1)})`); g.addColorStop(0.6,GOLD_RING); g.addColorStop(1,GOLD_GLOW);
-      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*6,0,Math.PI*2); ctx.fill();
+
+      // 柔光圓
+      const op = p.opBase + Math.sin(now/1800 + p.phase)*0.06;
+      const g  = ctx.createRadialGradient(p.x,p.y,0, p.x,p.y,p.r*6);
+      g.addColorStop(0, GOLD_CORE);
+      g.addColorStop(0.45, `rgba(255,240,180,${Math.max(0,op-0.12)})`);
+      g.addColorStop(0.6, GOLD_RING);
+      g.addColorStop(1, GOLD_GLOW);
+      ctx.fillStyle=g;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r*6,0,Math.PI*2); ctx.fill();
     }
-   
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+
+/* LINE 直接跳轉連結（沿用你的邀請碼） */
+document.getElementById('joinLink').href =
+  'https://line.me/ti/g2/cRKzRj5VZVMtQpEgzU2WHyxZRYuern3tfnKdVw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default';
+</script>
+</body>
+</html>

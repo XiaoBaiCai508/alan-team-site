@@ -17,14 +17,15 @@
   .bg,.grid,.center-band,canvas.fire-canvas{position:fixed;inset:0;}
   .bg{background:#000;z-index:0;}
 
-  /* 蜂巢格（較明顯金色） */
+  /* 蜂巢格（明顯但不刺眼） */
   .grid{z-index:1;opacity:.32;}
   .grid svg{width:100%;height:100%;display:block;}
 
-  /* 中央主內容帶（也是光球的阻擋區） */
+  /* 中央主內容帶（光球阻擋區） */
   .center-band{
     z-index:2;
-    left:50%;transform:translateX(-50%);
+    left:50%;
+    transform:translateX(-50%);
     width:var(--rail-w);
     pointer-events:none;
     background:linear-gradient(180deg,rgba(12,12,12,.92),rgba(8,8,8,.92));
@@ -32,10 +33,10 @@
     box-shadow:inset 0 0 0 1px rgba(250,204,21,.06);
   }
 
-  /* 飄動光球畫布（兩側） */
+  /* 兩側金色光球畫布 */
   canvas.fire-canvas{ z-index:2; pointer-events:none; }
 
-  /* 主內容 */
+  /* 主內容軌道 */
   main.rail{position:relative;z-index:3;width:var(--rail-w);margin-inline:auto;padding:72px 22px 160px;}
   .block{position:relative;max-width:940px;margin:0 auto;padding:clamp(36px,6vh,72px) 0;}
   .block+.block::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,rgba(212,175,55,0),rgba(212,175,55,.22),rgba(212,175,55,0));}
@@ -47,7 +48,7 @@
   h2{font-size:clamp(26px,3.6vw,40px);}
   p.lead{color:#d7d7d7;font-size:clamp(18px,2.2vw,22px);line-height:1.9;margin:0 auto;max-width:880px;text-align:left;}
 
-  /* 圖片樣式 */
+  /* 媒體樣式 */
   .media{display:grid;place-items:center;margin:24px 0 10px;}
   .portrait{width:clamp(140px,24vw,220px);aspect-ratio:1/1;border-radius:50%;overflow:hidden;border:1px solid rgba(212,175,55,.25);box-shadow:0 14px 40px rgba(0,0,0,.55);}
   .portrait img{width:100%;height:auto;display:block;}
@@ -61,11 +62,21 @@
   .metric span{color:#cfcfcf;font-size:14px;line-height:1.6;}
   @media(max-width:900px){.metrics{grid-template-columns:1fr;}}
 
-  /* 按鈕 */
-  .actions{display:flex;gap:12px;justify-content:center;margin-top:18px;flex-wrap:wrap;}
+  /* 行動列：置中、對稱 */
+  .actions{
+    display:flex;gap:14px;justify-content:center;align-items:center;
+    margin-top:18px;flex-wrap:wrap;
+  }
   .btn{appearance:none;border:1px solid rgba(212,175,55,.4);background:transparent;color:var(--text);padding:12px 18px;border-radius:10px;cursor:pointer;transition:.25s ease;text-decoration:none;}
   .btn.primary{background:linear-gradient(180deg,#f5d25a,#d4af37);color:#141210;border:none;box-shadow:0 6px 20px rgba(212,175,55,.35);}
   .btn:hover{transform:translateY(-1px);box-shadow:0 8px 26px rgba(212,175,55,.3);}
+
+  /* 社群小圖示（共用） */
+  .social-icon img{
+    width:34px;height:34px;border-radius:50%;display:block;
+    filter:saturate(1.05);transition:transform .2s ease, filter .2s ease;
+  }
+  .social-icon:hover img{ transform:scale(1.06); filter:saturate(1.2); }
 
   /* 固定左上 logo */
   .logo{position:fixed;z-index:4;left:20px;top:16px;display:flex;align-items:center;gap:10px;color:#cfcfcf;font-size:14px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;}
@@ -92,7 +103,7 @@
   <!-- 中央內容帶（光球不會進入） -->
   <div class="center-band" aria-hidden="true"></div>
 
-  <!-- ✅ 光球畫布（加回來了） -->
+  <!-- 金色光球 -->
   <canvas id="fireCanvas" class="fire-canvas"></canvas>
 
   <!-- 左上小 Logo -->
@@ -108,15 +119,26 @@
       <div class="eyebrow">ALAN ELITE TRADING TEAM</div>
       <h1>用紀律與結構，掌握市場主動權</h1>
       <p class="lead">
-        我們是一支結合多市場經驗的專業交易團隊，以紀律、結構與風控為核心價值。每位分析師都有獨立研究體系與交易模型，
-        透過多重策略與多週期分析，致力於在市場波動中維持穩定獲利。
+        我們是一支結合多市場經驗的專業交易團隊，以紀律、結構與風控為核心價值。每一位分析師皆有獨立的研究體系與交易模型，
+        透過多重策略與多週期分析，持續在市場波動中維持穩定獲利。
       </p>
+
+      <!-- 左：YouTube ｜ 中：加入 LINE 群 ｜ 右：Instagram（對稱置中） -->
       <div class="actions">
+        <a class="social-icon" href="https://www.youtube.com/@LutH-m2k" target="_blank" rel="noopener" aria-label="YouTube">
+          <img src="images/youtube.png" alt="YouTube" onerror="this.onerror=null;this.src='images/youtube.jpg';">
+        </a>
+
         <a class="btn primary" href="#join">加入 LINE 群</a>
+
+        <a class="social-icon" href="https://www.instagram.com/cryptoalan01" target="_blank" rel="noopener" aria-label="Instagram">
+          <img src="images/sm_5b37de3263964.jpg" alt="Instagram"
+               onerror="this.onerror=null;this.src='images/sm_5b37de3263964.png';">
+        </a>
       </div>
     </section>
 
-    <!-- 關鍵優勢 -->
+    <!-- 關鍵優勢帶（做為 Hero 與介紹的視覺緩衝） -->
     <section class="block band" id="highlights">
       <div class="eyebrow">OUR EDGE</div>
       <h2>策略 × 風控 × 紀律</h2>
@@ -129,71 +151,82 @@
 
     <!-- Alan -->
     <section class="block" id="alan">
-      <div class="media"><div class="portrait"><img src="images/alan-avatar.jpg" alt="Alan"></div></div>
+      <div class="media"><div class="portrait"><img src="images/alan-avatar.jpg" alt="Alan"
+        onerror="this.onerror=null;this.src='images/alan-avatar.png';"></div></div>
       <div class="eyebrow">Alan｜SMC 頂級高手</div>
       <h2>結構為王、紀律為盾</h2>
       <p class="lead">
-        Alan 精通 SMC 與諧波結構，能在市場流動性與結構轉換間精準定位。他注重進場邏輯的重複性與可驗證性，
-        主張「不追價、不賭博、只操作結構清晰的區間」。在團隊中，負責策略方向與交易紀律訓練。
+        Alan 精通 Smart Money Concept（SMC）與諧波結構，善於在市場流動性與結構轉換之間精準定位。
+        他注重進場邏輯的重複性與可驗證性，主張「不追價、不賭博、只操作結構清晰的區間」。
+        以紀律與風控為核心，重視回測統計與部位管理，強調交易是一套可被複製的流程而非臨場靈感。
+        在團隊中，Alan 負責策略方向與交易紀律訓練，帶領團隊以一致的語言面對市場。
       </p>
     </section>
 
     <!-- Demo -->
     <section class="block" id="demo">
-      <div class="media"><div class="portrait"><img src="images/demo.jpg" alt="Demo"></div></div>
+      <div class="media"><div class="portrait"><img src="images/demo.jpg" alt="Demo"
+        onerror="this.onerror=null;this.src='images/demo.png';"></div></div>
       <div class="eyebrow">Demo｜諧波型態頂級高手</div>
       <h2>結構與對稱的完美交界</h2>
       <p class="lead">
-        Demo 擅長捕捉市場諧波型態的節奏，透過 Fibonacci 區間與對稱性分析結合 SMC 結構，預判市場潛在反轉點。
-        他的策略在波段與中短線皆有高準確率，強調「耐心等待結構完成，而非主觀預測」。
+        Demo 擅長捕捉市場諧波型態的節奏，透過 Fibonacci 區間、對稱性與 PRZ（潛在反轉區）結合 SMC 結構，
+        能在型態完成前預判潛在反轉點。策略涵蓋中短線與波段，強調「耐心等待結構完成，而非主觀預測」，
+        並以風險報酬比與勝率組合來統整策略優勢，專注於具備可重複性的進場條件。
       </p>
     </section>
 
     <!-- JC -->
     <section class="block" id="jc">
-      <div class="media"><div class="portrait"><img src="images/jc.jpg" alt="JC"></div></div>
+      <div class="media"><div class="portrait"><img src="images/jc.jpg" alt="JC"
+        onerror="this.onerror=null;this.src='images/jc.png';"></div></div>
       <div class="eyebrow">JC｜傳統理論戰派</div>
       <h2>經典理論，現代視角</h2>
       <p class="lead">
-        JC 熟稔波浪理論、亞當理論與威克夫結構，並將它們與現代技術指標（EMA、多週期結構）整合運用。
-        他擅於解構市場行為邏輯，強調價格行為背後的群體心理與資金慣性，提供宏觀與微觀兼具的市場洞察。
+        JC 熟稔波浪理論、亞當理論與威克夫結構，並以 EMA 與多週期結構輔助判讀。
+        他擅於拆解趨勢的階段性變化、供需與量價關係，以行為金融與群體心理為底層假設，
+        將「經典理論」轉譯為更貼近當下市場結構的判讀框架，提供自上而下與自下而上兼具的洞察。
       </p>
     </section>
 
     <!-- Zac -->
     <section class="block" id="zac">
-      <div class="media"><div class="portrait"><img src="images/zac.jpg" alt="Zac"></div></div>
+      <div class="media"><div class="portrait"><img src="images/zac.jpg" alt="Zac"
+        onerror="this.onerror=null;this.src='images/zac.png';"></div></div>
       <div class="eyebrow">Zac｜風控與結構策略</div>
       <h2>紀律，是最終的勝率</h2>
       <p class="lead">
-        Zac 在團隊中負責策略管理與風控架構設計。他強調避免「倖存者偏差」，以統計與回測確保每筆交易在風險可控下運作。
-        對於 SMC 與結構轉換同樣精通，讓決策始終在邏輯與紀律的框架內運行。
+        Zac 在團隊中負責策略管理與風控架構設計。他以統計與回測為基礎，避免倖存者偏差，
+        強調「先定義風險，再討論獲利」。在部位控管、加減碼節奏與停損設計上具有嚴謹標準，
+        讓每一筆交易都能在可控風險下運作，確保長期的穩健性。
       </p>
     </section>
 
     <!-- 幣圈菜雞 -->
     <section class="block" id="rookie">
-      <div class="media"><div class="portrait"><img src="images/rookie.jpg" alt="Rookie"></div></div>
+      <div class="media"><div class="portrait"><img src="images/rookie.jpg" alt="Rookie"
+        onerror="this.onerror=null;this.src='images/rookie.png';"></div></div>
       <div class="eyebrow">幣圈菜雞｜全能型操盤手</div>
       <h2>橫跨市場，節奏制勝</h2>
       <p class="lead">
-        菜雞熟悉黃金、期貨與加密資產市場，擅於結合 SMC、價格行為與量能結構，靈活切換交易週期，快速適應不同環境。
-        在高波動的幣圈中，保持穩健與節奏感是他的核心優勢。
+        菜雞熟悉黃金、期貨與加密資產市場，擅於結合 SMC、價格行為與量能結構，並能靈活切換交易週期。
+        他注重「市場節奏」與波動特性，能在不同環境下快速調整策略，做到因勢制宜、動靜皆宜，
+        在高波動市場中保持穩健與效率。
       </p>
     </section>
 
     <!-- Join -->
     <section class="block" id="join">
-      <div class="media"><img class="qr" src="images/line-qr.jpg" alt="LINE QR"></div>
+      <div class="media"><img class="qr" src="images/line-qr.jpg" alt="LINE QR"
+        onerror="this.onerror=null;this.src='images/line-qr.png';"></div>
       <div class="eyebrow">JOIN</div>
       <h2>加入我們的 LINE 群</h2>
       <p class="lead" style="text-align:center">
-        如果你對結構化交易有熱情，或想了解我們的策略研究、實戰分享與市場觀點，
-        掃描 QR Code 或直接點擊下方按鈕加入。這裡沒有炒作，只有紀律與成長。
+        如果你也對結構化交易有熱情，或想進一步了解我們的策略研究、實戰分享與市場觀點，
+        掃描 QR Code 或直接點擊下方按鈕即可加入。這裡沒有炒作，只有紀律與成長。
       </p>
       <div class="actions">
         <a class="btn primary" id="joinLink" target="_blank" rel="noopener">直接跳轉 LINE</a>
-        <!-- ✅ 新增交易所按鈕，與 LINE 並排、樣式相同 -->
         <a class="btn primary" href="https://reurl.cc/vLMWg1" target="_blank" rel="noopener">BYBIT 交易所 註冊</a>
         <a class="btn primary" href="https://reurl.cc/qYENgR" target="_blank" rel="noopener">MEXC 抹茶 註冊</a>
       </div>
@@ -201,7 +234,7 @@
   </main>
 
 <script>
-/* ========= 兩側金色光球（已加回，持續飄動；不進中央帶） ========= */
+/* ========= 兩側金色光球（持續飄動；不進中央帶） ========= */
 (function(){
   const canvas=document.getElementById('fireCanvas');
   const ctx=canvas.getContext('2d');
@@ -228,15 +261,16 @@
   function resize(){
     DPR=Math.max(1,window.devicePixelRatio||1);
     W=innerWidth; H=innerHeight;
-    canvas.style.width=W+'px'; canvas.style.height=H+'px';
-    canvas.width=Math.round(W*DPR); canvas.height=Math.round(H*DPR);
+    canvas.style.width=W+'px';
+    canvas.style.height=H+'px';
+    canvas.width=Math.round(W*DPR);
+    canvas.height=Math.round(H*DPR);
     ctx.setTransform(DPR,0,0,DPR,0,0);
     measureBand();
   }
   addEventListener('resize',()=>requestAnimationFrame(resize));
   resize();
 
-  // 初始化：光球只生成在左右兩側
   for(let i=0;i<COUNT;i++){
     let x,y,r=rand(0.4,1.0);
     do{ x=rand(0,W); y=rand(0,H); }while(!outsideCenter(x,y,r));
@@ -251,29 +285,24 @@
     ctx.globalCompositeOperation='lighter';
 
     for(const p of particles){
-      // 微轉向 + 速度夾限（保持活性）
       const ang=Math.atan2(p.vy,p.vx)+(Math.random()-0.5)*TURN_RATE;
       let speed=Math.hypot(p.vx,p.vy);
       if(speed<MIN_SPEED)speed=MIN_SPEED; else if(speed>MAX_SPEED)speed=MAX_SPEED;
       p.vx=Math.cos(ang)*speed; p.vy=Math.sin(ang)*speed;
 
-      // 位移
       p.x+=p.vx*dt; p.y+=p.vy*dt;
 
-      // 視窗邊界彈回
       if(p.x<p.r){ p.x=p.r; p.vx=Math.abs(p.vx)*BOUNCE_BOOST; }
       if(p.x>W-p.r){ p.x=W-p.r; p.vx=-Math.abs(p.vx)*BOUNCE_BOOST; }
       if(p.y<p.r){ p.y=p.r; p.vy=Math.abs(p.vy)*BOUNCE_BOOST; }
       if(p.y>H-p.r){ p.y=H-p.r; p.vy=-Math.abs(p.vy)*BOUNCE_BOOST; }
 
-      // 中央內容帶阻擋：闖入則彈回左右
       if(p.y>bandRect.top-p.r && p.y<bandRect.bottom+p.r && p.x>bandRect.left-p.r && p.x<bandRect.right+p.r){
         const mid=(bandRect.left+bandRect.right)/2;
         if(p.x<mid){ p.x=bandRect.left-p.r; if(p.vx>0) p.vx*=-BOUNCE_BOOST; }
         else       { p.x=bandRect.right+p.r; if(p.vx<0) p.vx*=-BOUNCE_BOOST; }
       }
 
-      // 柔光圓
       const op = p.opBase + Math.sin(now/1800 + p.phase)*0.06;
       const g  = ctx.createRadialGradient(p.x,p.y,0, p.x,p.y,p.r*6);
       g.addColorStop(0, GOLD_CORE);
@@ -288,7 +317,7 @@
   requestAnimationFrame(loop);
 })();
 
-/* LINE 直接跳轉連結（沿用你的邀請碼） */
+/* LINE 直接跳轉連結（你的邀請碼） */
 document.getElementById('joinLink').href =
   'https://line.me/ti/g2/cRKzRj5VZVMtQpEgzU2WHyxZRYuern3tfnKdVw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default';
 </script>
